@@ -102,6 +102,16 @@ module Fluent
           end
         end
 
+        if rule["numeric"]
+          if record[key]
+            if record[key] =~ /\./
+              record[key] = record[key].to_f
+            else
+              record[key] = record[key].to_i
+            end
+          end
+        end
+
         if rule["last"]
           last = true
         end

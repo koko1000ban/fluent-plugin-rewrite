@@ -337,4 +337,21 @@ class RewriteOutputTest < Test::Unit::TestCase
     assert_equal('test.users', emits[0][0])
     assert_equal({ "path" => "/users/studio3104" }, emits[0][2])
   end
+
+  def test_rewrite_parse_numeric
+    d1 = create_driver(%[
+      <rule>
+        key     status
+        pattern ^\\d+$
+        numeric
+      </rule>
+    ])
+
+    assert_equal(
+      [ "test", { "status" => 500 } ],
+      d1.instance.rewrite("test", { "status" => "500" })
+    )
+
+  end
+
 end
